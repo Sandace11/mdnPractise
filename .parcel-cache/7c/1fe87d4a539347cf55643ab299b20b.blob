@@ -1,0 +1,37 @@
+var helpers = require("../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+try {
+  var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+  _parcelHelpers.defineInteropFlag(exports);
+  var _react = require('react');
+  var _reactDefault = _parcelHelpers.interopDefault(_react);
+  var _formatNumber = require('format-number');
+  var _formatNumberDefault = _parcelHelpers.interopDefault(_formatNumber);
+  var _dateFnsFormat = require('date-fns/format');
+  var _dateFnsFormatDefault = _parcelHelpers.interopDefault(_dateFnsFormat);
+  var _jsxFileName = "F:\\Sandesh\\JS\\mdnStudy\\will-it-miss\\src\\components\\Passing.js";
+  const formatter = _formatNumberDefault.default();
+  function Passing({data}) {
+    return data.map((_, i) => /*#__PURE__*/_reactDefault.default.createElement("p", {
+      key: i,
+      __self: this,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 9,
+        columnNumber: 5
+      }
+    }, "Misses ", _.orbiting_body, " tomorrow at", ' ', _dateFnsFormatDefault.default(_.epoch_date_close_approach, 'h:mmaaaa'), " by", ' ', formatter(parseInt(_.miss_distance.miles, 10)), " miles whilst travelling at ", _formatNumberDefault.default({
+      truncate: 0
+    })(_.relative_velocity.miles_per_hour), "mph"));
+  }
+  exports.default = Passing;
+  _c = Passing;
+  var _c;
+  $RefreshReg$(_c, "Passing");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

@@ -1,0 +1,17 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _toDateIndexJs = require("../../toDate/index.js");
+var _toDateIndexJsDefault = _parcelHelpers.interopDefault(_toDateIndexJs);
+var _requiredArgsIndexJs = require("../requiredArgs/index.js");
+var _requiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_requiredArgsIndexJs);
+function startOfUTCISOWeek(dirtyDate) {
+  _requiredArgsIndexJsDefault.default(1, arguments);
+  var weekStartsOn = 1;
+  var date = _toDateIndexJsDefault.default(dirtyDate);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
+}
+exports.default = startOfUTCISOWeek;

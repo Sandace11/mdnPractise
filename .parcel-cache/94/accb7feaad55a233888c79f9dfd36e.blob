@@ -1,0 +1,83 @@
+var helpers = require("../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+try {
+  var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+  _parcelHelpers.defineInteropFlag(exports);
+  var _react = require('react');
+  var _reactDefault = _parcelHelpers.interopDefault(_react);
+  var _Hazard = require('./Hazard');
+  var _HazardDefault = _parcelHelpers.interopDefault(_Hazard);
+  var _Passing = require('./Passing');
+  var _PassingDefault = _parcelHelpers.interopDefault(_Passing);
+  var _jsxFileName = "F:\\Sandesh\\JS\\mdnStudy\\will-it-miss\\src\\components\\Orbital.js";
+  function Orbital({name, is_potentially_hazardous_asteroid, close_approach_data, nasa_jpl_url}) {
+    return (
+      /*#__PURE__*/_reactDefault.default.createElement("div", {
+        className: is_potentially_hazardous_asteroid ? 'is-hazard' : 'no-hazard',
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 12,
+          columnNumber: 5
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("h2", {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 15,
+          columnNumber: 7
+        }
+      }, name.replace(/[()]/g, '')), /*#__PURE__*/_reactDefault.default.createElement("p", {
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 16,
+          columnNumber: 7
+        }
+      }, "Potentially hazardous?", ' ', /*#__PURE__*/_reactDefault.default.createElement(_HazardDefault.default, {
+        yes: is_potentially_hazardous_asteroid,
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 18,
+          columnNumber: 9
+        }
+      })), /*#__PURE__*/_reactDefault.default.createElement(_PassingDefault.default, {
+        data: close_approach_data,
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 20,
+          columnNumber: 7
+        }
+      }), /*#__PURE__*/_reactDefault.default.createElement("p", {
+        className: "more",
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 21,
+          columnNumber: 7
+        }
+      }, /*#__PURE__*/_reactDefault.default.createElement("a", {
+        href: nasa_jpl_url,
+        target: "_blank",
+        __self: this,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 22,
+          columnNumber: 9
+        }
+      }, "Find out more")))
+    );
+  }
+  exports.default = Orbital;
+  _c = Orbital;
+  var _c;
+  $RefreshReg$(_c, "Orbital");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}

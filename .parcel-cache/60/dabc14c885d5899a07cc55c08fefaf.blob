@@ -1,0 +1,37 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _libBuildFormatLongFnIndexJs = require("../../../_lib/buildFormatLongFn/index.js");
+var _libBuildFormatLongFnIndexJsDefault = _parcelHelpers.interopDefault(_libBuildFormatLongFnIndexJs);
+var dateFormats = {
+  full: 'EEEE, MMMM do, y',
+  long: 'MMMM do, y',
+  medium: 'MMM d, y',
+  short: 'MM/dd/yyyy'
+};
+var timeFormats = {
+  full: 'h:mm:ss a zzzz',
+  long: 'h:mm:ss a z',
+  medium: 'h:mm:ss a',
+  short: 'h:mm a'
+};
+var dateTimeFormats = {
+  full: "{{date}} 'at' {{time}}",
+  long: "{{date}} 'at' {{time}}",
+  medium: '{{date}}, {{time}}',
+  short: '{{date}}, {{time}}'
+};
+var formatLong = {
+  date: _libBuildFormatLongFnIndexJsDefault.default({
+    formats: dateFormats,
+    defaultWidth: 'full'
+  }),
+  time: _libBuildFormatLongFnIndexJsDefault.default({
+    formats: timeFormats,
+    defaultWidth: 'full'
+  }),
+  dateTime: _libBuildFormatLongFnIndexJsDefault.default({
+    formats: dateTimeFormats,
+    defaultWidth: 'full'
+  })
+};
+exports.default = formatLong;

@@ -1,0 +1,29 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _toDateIndexJs = require("../../toDate/index.js");
+var _toDateIndexJsDefault = _parcelHelpers.interopDefault(_toDateIndexJs);
+var _startOfUTCISOWeekIndexJs = require("../startOfUTCISOWeek/index.js");
+var _startOfUTCISOWeekIndexJsDefault = _parcelHelpers.interopDefault(_startOfUTCISOWeekIndexJs);
+var _requiredArgsIndexJs = require("../requiredArgs/index.js");
+var _requiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_requiredArgsIndexJs);
+function getUTCISOWeekYear(dirtyDate) {
+  _requiredArgsIndexJsDefault.default(1, arguments);
+  var date = _toDateIndexJsDefault.default(dirtyDate);
+  var year = date.getUTCFullYear();
+  var fourthOfJanuaryOfNextYear = new Date(0);
+  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
+  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = _startOfUTCISOWeekIndexJsDefault.default(fourthOfJanuaryOfNextYear);
+  var fourthOfJanuaryOfThisYear = new Date(0);
+  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
+  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = _startOfUTCISOWeekIndexJsDefault.default(fourthOfJanuaryOfThisYear);
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+exports.default = getUTCISOWeekYear;

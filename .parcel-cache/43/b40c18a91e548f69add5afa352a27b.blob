@@ -1,0 +1,18 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _getUTCISOWeekYearIndexJs = require("../getUTCISOWeekYear/index.js");
+var _getUTCISOWeekYearIndexJsDefault = _parcelHelpers.interopDefault(_getUTCISOWeekYearIndexJs);
+var _startOfUTCISOWeekIndexJs = require("../startOfUTCISOWeek/index.js");
+var _startOfUTCISOWeekIndexJsDefault = _parcelHelpers.interopDefault(_startOfUTCISOWeekIndexJs);
+var _requiredArgsIndexJs = require("../requiredArgs/index.js");
+var _requiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_requiredArgsIndexJs);
+function startOfUTCISOWeekYear(dirtyDate) {
+  _requiredArgsIndexJsDefault.default(1, arguments);
+  var year = _getUTCISOWeekYearIndexJsDefault.default(dirtyDate);
+  var fourthOfJanuary = new Date(0);
+  fourthOfJanuary.setUTCFullYear(year, 0, 4);
+  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
+  var date = _startOfUTCISOWeekIndexJsDefault.default(fourthOfJanuary);
+  return date;
+}
+exports.default = startOfUTCISOWeekYear;

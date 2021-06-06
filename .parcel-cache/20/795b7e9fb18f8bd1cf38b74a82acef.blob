@@ -1,0 +1,116 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _isValidIndexJs = require("../isValid/index.js");
+var _isValidIndexJsDefault = _parcelHelpers.interopDefault(_isValidIndexJs);
+var _localeEnUSIndexJs = require("../locale/en-US/index.js");
+var _localeEnUSIndexJsDefault = _parcelHelpers.interopDefault(_localeEnUSIndexJs);
+var _subMillisecondsIndexJs = require("../subMilliseconds/index.js");
+var _subMillisecondsIndexJsDefault = _parcelHelpers.interopDefault(_subMillisecondsIndexJs);
+var _toDateIndexJs = require("../toDate/index.js");
+var _toDateIndexJsDefault = _parcelHelpers.interopDefault(_toDateIndexJs);
+var _libFormatFormattersIndexJs = require("../_lib/format/formatters/index.js");
+var _libFormatFormattersIndexJsDefault = _parcelHelpers.interopDefault(_libFormatFormattersIndexJs);
+var _libFormatLongFormattersIndexJs = require("../_lib/format/longFormatters/index.js");
+var _libFormatLongFormattersIndexJsDefault = _parcelHelpers.interopDefault(_libFormatLongFormattersIndexJs);
+var _libGetTimezoneOffsetInMillisecondsIndexJs = require("../_lib/getTimezoneOffsetInMilliseconds/index.js");
+var _libGetTimezoneOffsetInMillisecondsIndexJsDefault = _parcelHelpers.interopDefault(_libGetTimezoneOffsetInMillisecondsIndexJs);
+var _libProtectedTokensIndexJs = require("../_lib/protectedTokens/index.js");
+var _libToIntegerIndexJs = require("../_lib/toInteger/index.js");
+var _libToIntegerIndexJsDefault = _parcelHelpers.interopDefault(_libToIntegerIndexJs);
+var _libRequiredArgsIndexJs = require("../_lib/requiredArgs/index.js");
+var _libRequiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_libRequiredArgsIndexJs);
+// This RegExp consists of three parts separated by `|`:
+// - [yYQqMLwIdDecihHKkms]o matches any available ordinal number token
+// (one of the certain letters followed by `o`)
+// - (\w)\1* matches any sequences of the same letter
+// - '' matches two quote characters in a row
+// - '(''|[^'])+('|$) matches anything surrounded by two quote characters ('),
+// except a single quote symbol, which ends the sequence.
+// Two quote characters do not end the sequence.
+// If there is no matching single quote
+// then the sequence will continue until the end of the string.
+// - . matches any single character unmatched by previous parts of the RegExps
+var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+// This RegExp catches symbols escaped by quotes, and also
+// sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
+var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+var escapedStringRegExp = /^'([^]*?)'?$/;
+var doubleQuoteRegExp = /''/g;
+var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+function format(dirtyDate, dirtyFormatStr, dirtyOptions) {
+  _libRequiredArgsIndexJsDefault.default(2, arguments);
+  var formatStr = String(dirtyFormatStr);
+  var options = dirtyOptions || ({});
+  var locale = options.locale || _localeEnUSIndexJsDefault.default;
+  var localeFirstWeekContainsDate = locale.options && locale.options.firstWeekContainsDate;
+  var defaultFirstWeekContainsDate = localeFirstWeekContainsDate == null ? 1 : _libToIntegerIndexJsDefault.default(localeFirstWeekContainsDate);
+  var firstWeekContainsDate = options.firstWeekContainsDate == null ? defaultFirstWeekContainsDate : _libToIntegerIndexJsDefault.default(options.firstWeekContainsDate);
+  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
+  }
+  var localeWeekStartsOn = locale.options && locale.options.weekStartsOn;
+  var defaultWeekStartsOn = localeWeekStartsOn == null ? 0 : _libToIntegerIndexJsDefault.default(localeWeekStartsOn);
+  var weekStartsOn = options.weekStartsOn == null ? defaultWeekStartsOn : _libToIntegerIndexJsDefault.default(options.weekStartsOn);
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+  if (!locale.localize) {
+    throw new RangeError('locale must contain localize property');
+  }
+  if (!locale.formatLong) {
+    throw new RangeError('locale must contain formatLong property');
+  }
+  var originalDate = _toDateIndexJsDefault.default(dirtyDate);
+  if (!_isValidIndexJsDefault.default(originalDate)) {
+    throw new RangeError('Invalid time value');
+  }
+  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
+  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
+  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
+  var timezoneOffset = _libGetTimezoneOffsetInMillisecondsIndexJsDefault.default(originalDate);
+  var utcDate = _subMillisecondsIndexJsDefault.default(originalDate, timezoneOffset);
+  var formatterOptions = {
+    firstWeekContainsDate: firstWeekContainsDate,
+    weekStartsOn: weekStartsOn,
+    locale: locale,
+    _originalDate: originalDate
+  };
+  var result = formatStr.match(longFormattingTokensRegExp).map(function (substring) {
+    var firstCharacter = substring[0];
+    if (firstCharacter === 'p' || firstCharacter === 'P') {
+      var longFormatter = _libFormatLongFormattersIndexJsDefault.default[firstCharacter];
+      return longFormatter(substring, locale.formatLong, formatterOptions);
+    }
+    return substring;
+  }).join('').match(formattingTokensRegExp).map(function (substring) {
+    // Replace two single quote characters with one single quote character
+    if (substring === "''") {
+      return "'";
+    }
+    var firstCharacter = substring[0];
+    if (firstCharacter === "'") {
+      return cleanEscapedString(substring);
+    }
+    var formatter = _libFormatFormattersIndexJsDefault.default[firstCharacter];
+    if (formatter) {
+      if (!options.useAdditionalWeekYearTokens && _libProtectedTokensIndexJs.isProtectedWeekYearToken(substring)) {
+        _libProtectedTokensIndexJs.throwProtectedError(substring, dirtyFormatStr, dirtyDate);
+      }
+      if (!options.useAdditionalDayOfYearTokens && _libProtectedTokensIndexJs.isProtectedDayOfYearToken(substring)) {
+        _libProtectedTokensIndexJs.throwProtectedError(substring, dirtyFormatStr, dirtyDate);
+      }
+      return formatter(utcDate, substring, locale.localize, formatterOptions);
+    }
+    if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
+      throw new RangeError('Format string contains an unescaped latin alphabet character `' + firstCharacter + '`');
+    }
+    return substring;
+  }).join('');
+  return result;
+}
+exports.default = format;
+function cleanEscapedString(input) {
+  return input.match(escapedStringRegExp)[1].replace(doubleQuoteRegExp, "'");
+}

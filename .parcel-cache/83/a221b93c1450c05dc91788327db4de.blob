@@ -1,0 +1,35 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _libFormatDistanceIndexJs = require("./_lib/formatDistance/index.js");
+var _libFormatDistanceIndexJsDefault = _parcelHelpers.interopDefault(_libFormatDistanceIndexJs);
+var _libFormatLongIndexJs = require("./_lib/formatLong/index.js");
+var _libFormatLongIndexJsDefault = _parcelHelpers.interopDefault(_libFormatLongIndexJs);
+var _libFormatRelativeIndexJs = require("./_lib/formatRelative/index.js");
+var _libFormatRelativeIndexJsDefault = _parcelHelpers.interopDefault(_libFormatRelativeIndexJs);
+var _libLocalizeIndexJs = require("./_lib/localize/index.js");
+var _libLocalizeIndexJsDefault = _parcelHelpers.interopDefault(_libLocalizeIndexJs);
+var _libMatchIndexJs = require("./_lib/match/index.js");
+var _libMatchIndexJsDefault = _parcelHelpers.interopDefault(_libMatchIndexJs);
+/**
+* @type {Locale}
+* @category Locales
+* @summary English locale (United States).
+* @language English
+* @iso-639-2 eng
+* @author Sasha Koss [@kossnocorp]{@link https://github.com/kossnocorp}
+* @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
+*/
+var locale = {
+  code: 'en-US',
+  formatDistance: _libFormatDistanceIndexJsDefault.default,
+  formatLong: _libFormatLongIndexJsDefault.default,
+  formatRelative: _libFormatRelativeIndexJsDefault.default,
+  localize: _libLocalizeIndexJsDefault.default,
+  match: _libMatchIndexJsDefault.default,
+  options: {
+    weekStartsOn: 0,
+    /*Sunday*/
+    firstWeekContainsDate: 1
+  }
+};
+exports.default = locale;

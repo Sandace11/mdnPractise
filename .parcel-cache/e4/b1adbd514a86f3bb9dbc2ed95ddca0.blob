@@ -1,0 +1,23 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _libToIntegerIndexJs = require("../_lib/toInteger/index.js");
+var _libToIntegerIndexJsDefault = _parcelHelpers.interopDefault(_libToIntegerIndexJs);
+var _toDateIndexJs = require("../toDate/index.js");
+var _toDateIndexJsDefault = _parcelHelpers.interopDefault(_toDateIndexJs);
+var _libRequiredArgsIndexJs = require("../_lib/requiredArgs/index.js");
+var _libRequiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_libRequiredArgsIndexJs);
+function addDays(dirtyDate, dirtyAmount) {
+  _libRequiredArgsIndexJsDefault.default(2, arguments);
+  var date = _toDateIndexJsDefault.default(dirtyDate);
+  var amount = _libToIntegerIndexJsDefault.default(dirtyAmount);
+  if (isNaN(amount)) {
+    return new Date(NaN);
+  }
+  if (!amount) {
+    // If 0 days, no-op to avoid changing times in the hour before end of DST
+    return date;
+  }
+  date.setDate(date.getDate() + amount);
+  return date;
+}
+exports.default = addDays;

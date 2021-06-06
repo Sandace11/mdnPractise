@@ -1,0 +1,18 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _toDateIndexJs = require("../../toDate/index.js");
+var _toDateIndexJsDefault = _parcelHelpers.interopDefault(_toDateIndexJs);
+var _requiredArgsIndexJs = require("../requiredArgs/index.js");
+var _requiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_requiredArgsIndexJs);
+var MILLISECONDS_IN_DAY = 86400000;
+function getUTCDayOfYear(dirtyDate) {
+  _requiredArgsIndexJsDefault.default(1, arguments);
+  var date = _toDateIndexJsDefault.default(dirtyDate);
+  var timestamp = date.getTime();
+  date.setUTCMonth(0, 1);
+  date.setUTCHours(0, 0, 0, 0);
+  var startOfYearTimestamp = date.getTime();
+  var difference = timestamp - startOfYearTimestamp;
+  return Math.floor(difference / MILLISECONDS_IN_DAY) + 1;
+}
+exports.default = getUTCDayOfYear;

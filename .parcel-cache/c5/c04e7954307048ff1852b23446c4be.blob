@@ -1,0 +1,21 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _toDateIndexJs = require("../../toDate/index.js");
+var _toDateIndexJsDefault = _parcelHelpers.interopDefault(_toDateIndexJs);
+var _startOfUTCISOWeekIndexJs = require("../startOfUTCISOWeek/index.js");
+var _startOfUTCISOWeekIndexJsDefault = _parcelHelpers.interopDefault(_startOfUTCISOWeekIndexJs);
+var _startOfUTCISOWeekYearIndexJs = require("../startOfUTCISOWeekYear/index.js");
+var _startOfUTCISOWeekYearIndexJsDefault = _parcelHelpers.interopDefault(_startOfUTCISOWeekYearIndexJs);
+var _requiredArgsIndexJs = require("../requiredArgs/index.js");
+var _requiredArgsIndexJsDefault = _parcelHelpers.interopDefault(_requiredArgsIndexJs);
+var MILLISECONDS_IN_WEEK = 604800000;
+function getUTCISOWeek(dirtyDate) {
+  _requiredArgsIndexJsDefault.default(1, arguments);
+  var date = _toDateIndexJsDefault.default(dirtyDate);
+  var diff = _startOfUTCISOWeekIndexJsDefault.default(date).getTime() - _startOfUTCISOWeekYearIndexJsDefault.default(date).getTime();
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
+}
+exports.default = getUTCISOWeek;
